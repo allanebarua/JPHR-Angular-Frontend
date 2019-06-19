@@ -1,0 +1,41 @@
+<div class="health-record-page">
+
+  <div>
+    <div *ngIf="yesData">
+    <br><button class="refresh" (click)="getProviderRecords()">Refresh</button><br>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class="id">#</th>
+          <th class="col1">Provider Type</th>
+          <th class="col2">Provider Name</th>
+          <th class="col2">Email</th>
+          <th class="col1">Phone Number</th>
+          <th class="col1">Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let provider of providers; let i = index">
+          <td class="hyphens">{{ i + 1 }}.</td>
+          <td class="hyphens">{{ provider.providerType}}</td>
+          <td class="hyphens">{{ provider.participantName.firstName }} {{ provider.participantName.lastName }}</td>
+          <td class="hyphens">{{ provider.email }}</td>
+          <td class="hyphens">{{ provider.phone[0] }}</td>
+          <td class="hyphens">{{ provider.participantAddress.box }}, {{ provider.participantAddress.town }}</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div *ngIf="noData">
+      <app-error404 [childMessage]="'No CareProviders Found'"></app-error404>
+      <div class="refresh-after-err">
+          <button class="refresh2" (click)="getProviderRecords()">Refresh</button>
+      </div>
+    </div>
+
+    <div *ngIf="fetchingData">
+      <app-loading-page [messageFromParent]="'Fetching CareProviders'"></app-loading-page>
+    </div>
+  </div>
+</div>

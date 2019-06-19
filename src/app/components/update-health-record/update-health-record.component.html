@@ -1,0 +1,73 @@
+  <!-- Update Health Record -->
+<br><br>
+<div class="container myrecord">
+  <form class = 'create-record' [formGroup]="updateRecordForm" (ngSubmit)="updateRecord()">
+    <button type="button" class="prefill" (click)="loadData(0)">prefil data</button><br><br>
+    <div class='myMessage'>
+        <div class="alert {{alertMessage.style}} alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{alertMessage.heading}}</strong> {{alertMessage.body}}
+        </div><br>
+    </div>
+
+    <!-- symptoms and treatment page-->
+    <div class="symptoms" *ngIf="page == 'symptoms'">
+      <div class="form-group shadow-textarea">
+          <label for="exampleFormControlTextarea6">Patient's Symptoms </label>
+          <textarea  id="symptoms" class="form-control" rows="5" formControlName="symptoms"></textarea>
+      </div>
+
+      <div class="form-group shadow-textarea">
+          <label for="exampleFormControlTextarea6">Medical Treatment </label>
+          <textarea  id="treatments" class="form-control" rows="5" formControlName="treatment"></textarea>
+      </div>
+
+      <button type="button" class="previous" disabled><<Previous</button>
+      <button type="button" class="next" (click)="pageToShow('diagnosis')">Next>></button>
+    </div>
+
+
+    <!-- diagnosis page-->
+    <div class="diagnosis" *ngIf="page == 'diagnosis'">
+      <div class='loaded-diag'>
+        <div *ngFor="let diag of inputDiagnosis; let i=index">
+          <p class="diag-item">
+            <button type="button" class="remove-diag" (click)="removeDiagnosis(i)">X</button>
+            <span class='diag-headings'><strong>Procedure: </strong></span>{{diag.procedure}}<br>
+            <span class='diag-headings'><strong>Result: </strong></span>{{diag.result}}
+          </p>
+        </div>
+
+      </div>
+      <div class='diagnosis-input'>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text field-size">Procedure <span class='required'>*</span></span>
+            </div>
+            <input id="pro" type="email" class="form-control" formControlName="procedure" #a>
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text field-size">Results<span class='required'>*</span></span>
+            </div>
+            <input id="res" type="email" class="form-control" formControlName="result" #b>
+            <button type="button" class="add-btn" (click)="addDiagnosis(a.value, b.value)">+</button>
+        </div>
+      </div><br>
+
+      <button type="button" class="previous" (click)="pageToShow('symptoms')"><<Previous</button>
+      <button type="button" class="next" disabled>Next>></button><br><br>
+
+      <div class='submit-btn'>
+          <button *ngIf="submitBtn; else notsubmitBtn" name="submit" type="submit" id="submit">Submit</button>
+          <ng-template #notsubmitBtn>
+            <button id="submit" disabled>
+                <span class="spinner-border spinner-border-sm"></span>
+                Submitting ...
+            </button>
+          </ng-template>
+      </div>
+    </div>
+  </form>
+</div>

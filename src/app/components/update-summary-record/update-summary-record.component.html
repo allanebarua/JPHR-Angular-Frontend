@@ -1,0 +1,87 @@
+<br><br>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+          <div id="update-record" class="myform">
+            <form class = 'creat-summary-form' [formGroup]="updateRecordForm" (ngSubmit)="updateRecord()">
+                <div class="alert {{alertMessage.style}} alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{alertMessage.heading}} </strong> {{alertMessage.body}}
+                </div><br>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text field-size">Blood Group <span class='required'>*</span></span>
+                    </div>
+                    <select name="bloodGroup" class="form-control" formControlName="bloodGroup">
+                        <option value="Blood Group A" selected="{{A}}">Blood Group A</option>
+                        <option value="Blood Group B" selected="{{B}}">Blood Group B</option>
+                        <option value="Blood Group AB" selected="{{AB}}">Blood Group AB</option>
+                        <option value="Blood Group O" selected="{{O}}">Blood Group O</option>
+                    </select>
+                </div>
+
+                <div class = "shadow-lg p-4 mb-4 bg-light">
+                <div class="myallegies">
+                  <h4>Allergies</h4>
+                  <div class='loaded-diag'>
+                      <div *ngFor="let allergy of allergies; let i = index">
+                        <p class="diag-item">
+                          <button type="button" class="remove-allergy" (click)="removeAllergy(i)">X</button>
+                          <span class='diag-headings'><strong>{{i + 1}} : </strong></span>{{allergy}}<br>
+                        </p>
+                      </div>
+                  </div>
+                  <br>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text field-size">Allergies <span class='required'>*</span></span>
+                    </div>
+                    <input id="allergies" class="form-control" type="text" formControlName="allergies" #a>
+                    <button type="button" class="add-btn" (click)="addAllergy(a.value)">+</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class = "shadow-lg p-4 mb-4 bg-light">
+                <div class="other-record">
+                  <h4>Other</h4>
+                  <div class='loaded-diag'>
+                      <div *ngFor="let diag of otherInfo; let i=index">
+                        <p class="diag-item">
+                          <button type="button" class="remove-diag" (click)="removeOtherinfo(i)">X</button>
+                          <span class='diag-headings'><strong>About: </strong></span>{{diag.about}}<br>
+                          <span class='diag-headings'><strong>Body : </strong></span>{{diag.body}}
+                        </p>
+                      </div>
+                  </div>
+                  <br>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text field-size">About <span class='required'>*</span></span>
+                    </div>
+                    <input id="about" class="form-control" type="text" formControlName="about" #b>
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <span class="input-group-text field-size">Note <span class='required'>*</span></span>
+                    <textarea id="body" row="4" class="form-control" placeholder="write something about the note.." formControlName="body" #c></textarea>
+                    <button type="button" class="add-btn" (click)="addOtherInfo(b.value, c.value)">+</button>
+                  </div>
+                </div>
+
+                </div>
+                <div class='submit-btn'>
+                    <button *ngIf="submitBtn; else notsubmitBtn" name="submit" type="submit" id="submit">Submit</button>
+                    <ng-template #notsubmitBtn>
+                      <button id="submit" disabled>
+                          <span class="spinner-border spinner-border-sm"></span>
+                          Submitting ...
+                      </button>
+                    </ng-template>
+                </div>
+            </form>
+          </div>
+        </div>
+    </div>
+  </div>

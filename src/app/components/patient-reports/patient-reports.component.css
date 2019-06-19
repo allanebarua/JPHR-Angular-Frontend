@@ -1,0 +1,52 @@
+div.main-page {
+  margin-left: 800px;
+  margin-top: 200px;
+}
+
+button.report-nav {
+  width: 300px;
+  height: 200px;
+  margin-left: 30px;
+  text-decoration: none;
+  border: none;
+  color: white;
+  font-size:20px;
+}
+
+div.two-navs {
+  margin-bottom: 5px;
+}
+
+button.delete:hover {
+  background-color: red;
+}
+
+button.update:hover {
+  background-color: blue;
+}
+
+button.create:hover {
+  background-color: green;
+}
+
+button.view:hover {
+  background-color: orange;
+}
+
+
+
+button.delete {
+  background-color: rgb(241, 119, 119);
+}
+
+button.update {
+  background-color: rgb(102, 102, 252);
+}
+
+button.create {
+  background-color: rgb(98, 240, 98);
+}
+
+button.view {
+  background-color: rgb(255, 197, 88);
+}

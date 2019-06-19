@@ -1,0 +1,125 @@
+<br><br>
+<div class="container">
+  <div class="view-record" *ngIf="viewRecord else update">
+    <div class = "shadow p-4 mb-4 bg-light">
+      <!-- Owner data-->
+      <div class="row">
+        <div class="col-5">
+          <div class="card owner">
+            <img class="card-img-top" src="./../../../assets/images/default-owner.jpg" alt="Card image" style="width:100%;height:100%">
+          </div>
+        </div>
+
+        <div class="col-7">
+          <div class="owner-profile" style="width:400px">
+            <div class="owner-heading">
+              <pre class="green-heading">Owner: Patient's Details</pre>
+              <hr>
+            </div>
+            <div class='profile-entry'>
+                <div class="data-element">Name</div>
+                <div class="data-itself"><pre>{{childMessage.owner.participantName.firstName}} {{childMessage.owner.participantName.lastName}}</pre></div>
+            </div>
+            <div class='profile-entry'>
+                <div class="data-element">Gender</div>
+                <div class="data-itself"><pre>{{childMessage.owner.gender}}</pre></div>
+            </div>
+            <div class='profile-entry'>
+                <div class="data-element">DOB</div>
+                <div class="data-itself"><pre>{{childMessage.owner.dob}}</pre></div>
+            </div>
+            <div class='profile-entry'>
+                <div class="data-element">Phone</div>
+                <div class="data-itself"><pre>{{childMessage.owner.phone[0]}}</pre></div>
+            </div>
+            <div class='profile-entry'>
+                <div class="data-element">Email</div>
+                <div class="data-itself"><pre>{{childMessage.owner.email}}</pre></div>
+            </div>
+            <div class='profile-entry'>
+                <div class="data-element">Address</div>
+                <div class="data-itself"><pre>{{childMessage.owner.participantAddress.box}}, {{childMessage.owner.participantAddress.town}}</pre></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class = "shadow-sm p-4 mb-4 bg-light">
+        <button type="button" class="action-btn delete {{childMessage.delete}}" data-toggle="modal" data-target="#myModal">Delete Record</button>
+        <button type="button" class="action-btn update {{childMessage.update}}" (click) = "updateRecord()">Update Record</button>
+      <pre class="green-heading">Health record created by <span>{{createdBy.participantType}}</span> : <span>{{createdBy.participant}}</span> on <span>{{childMessage.healthRecord.dateCreated}}</span></pre>
+      <div class="my-btn-group">
+        <button class="ind-btn" (click)="toggleView('symptoms')"> Physical Symptoms</button>
+        <button class="ind-btn" (click)="toggleView('diagnosis')"> Diagnosis</button>
+        <button class="ind-btn" (click)="toggleView('treatment')"> Treatment</button>
+      </div>
+    <!-- Medical record data-->
+    <div class="record-detail">
+      <div *ngIf="dataToView=='symptoms'">
+          <!-- Symptoms-->
+            <div class="symptoms">
+              <h3>Physical Symptoms</h3>
+              <ul class="list-group list-group-flush" *ngFor="let symptom of childMessage.healthRecord.symptoms; let i = index">
+                <li class="list-group-item">{{symptom}}</li>
+              </ul>
+            </div>
+      </div>
+
+      <div *ngIf="dataToView=='diagnosis'">
+
+          <div class="my-summary-data">
+              <table id="t" class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="desc-num"><h3>#</h3></th>
+                    <th class="about-col"><h3>Procedure</h3></th>
+                    <th class="desc-col"><h3>Result</h3></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor=" let diag of childMessage.healthRecord.diagnosis; let i = index">
+                    <td class="hyphens">{{i + 1}}</td>
+                    <td class="hyphens">{{diag.procedure}}</td>
+                    <td class="hyphens">{{diag.result}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+
+      <div *ngIf="dataToView=='treatment'">
+          <!-- Symptoms-->
+            <div class="treatment">
+              <h3>Medical Treatment</h3>
+              <ul class="list-group list-group-flush" *ngFor="let treatment of childMessage.healthRecord.treatment; let i = index">
+                <li class="list-group-item">{{treatment}}</li>
+              </ul>
+            </div>
+      </div>
+    </div>
+
+      </div>
+    </div>
+
+    <ng-template #update>
+      <div class="update-record">
+        <app-update-health-record [updateChildMessage]="dataToUpdateRecordComponent"></app-update-health-record>
+      </div>
+    </ng-template>
+
+    <!-- Delete record Modal -->
+    <div class="modal fade" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Modal body -->
+          <div class="modal-body">
+            Are you sure you want to delete the record?
+            <button type="button" class="modal-btn delete" data-dismiss="modal" (click) = "deleteRecord()">Yes</button>
+            <button type="button" class="modal-btn update" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>

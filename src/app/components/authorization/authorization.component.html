@@ -1,0 +1,159 @@
+<div class='auth-page'>
+  <div class='auth-nav'>
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#view-auth" (click)="setViewToHome()">View Authorizations</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#grant-auth">Grant Access</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#rev-auth">Authorization Requests</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+
+    <!-- View authorizations -->
+    <div id="view-auth" class="tab-pane active">
+        <div class="container">
+          <div *ngIf="yesData">
+
+            <div *ngIf="authList; else updateAuth">
+                <br><button class="refresh" (click)="getAuthorizations()">Refresh</button><br><br>
+            <table class="table table-hover table-rad">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Owner</th>
+                  <th>Care Provider</th>
+                  <th>Access Rights</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let authData of currentAuthData.authorization; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ currentAuthData.authid }}</td>
+                  <td>{{ authData.careProviderId }}</td>
+                  <td>
+                    <span *ngFor="let right of authData.accessRights" class="badge badge-info">
+                      {{right}}
+                    </span>
+                  </td>
+                  <td>
+                    <button class="auth-btn btn-revoke" type="button" data-toggle="modal" data-target="#myModal" (click)="setRevokeThis(authData)">Revoke</button>
+                    <button class="auth-btn btn-update" type="button" (click)="updateAccessRights(authData, currentAuthData.authid)">Update</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <ng-template #updateAuth><br><br>
+            <app-update-authorization (messageEvent)="receiveMessage($event)" [childMessage]="dataToUpdate"></app-update-authorization>
+          </ng-template>
+
+          </div>
+
+          <div *ngIf="noData">
+            <app-error404 [childMessage]="noAuthMessage"></app-error404>
+            <div class="refresh-after-err">
+              <button class="refresh2" (click)="getAuthorizations()">Refresh</button>
+            </div>
+          </div>
+
+          <!-- Fetching summary medical records-->
+          <div *ngIf="fetchingData">
+            <app-loading-page [messageFromParent]="'Fetching Authorization Records'"></app-loading-page>
+          </div>
+
+        </div>
+        </div>
+
+        <!-- Grant Authorization -->
+        <div id="grant-auth" class="container tab-pane fade">
+          <br><br>
+            <form class = 'grant-auth' [formGroup]="grantAccessForm" (ngSubmit)="grantAccess()">
+                <div class="alert {{alertType}} alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{message.heading}} </strong> {{message.body}}
+                </div><br>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text field-size">Subject <span class='required'>*</span></span>
+                    </div>
+                    <input type="email" class="form-control" placeholder="Provider's Email" formControlName="subject">
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text field-size">Access Rights<span class='required'>*</span></span>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Read" formControlName="read">
+                        <label class="form-check-label" for="inlineCheckbox1">Read</label>
+                      </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Create" formControlName="create">
+                        <label class="form-check-label" for="inlineCheckbox2">Create</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Update" formControlName="update">
+                        <label class="form-check-label" for="inlineCheckbox1">Update</label>
+                      </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Delete" formControlName="delete">
+                        <label class="form-check-label" for="inlineCheckbox2">Delete</label>
+                    </div>
+                </div><br>
+                <div class='submit-btn'>
+                    <button *ngIf="submitBtn; else notsubmitBtn" name="submit" type="submit" id="submit">Submit</button>
+                    <ng-template #notsubmitBtn>
+                      <button id="submit" disabled>
+                          <span class="spinner-border spinner-border-sm"></span>
+                          Submitting ...
+                      </button>
+                    </ng-template>
+                </div>
+                <br>
+            </form>
+        </div>
+
+    <div id="rev-auth" class="tab-pane fade">
+        <app-authorization-request-view [myParentMessage]="parentMessage"></app-authorization-request-view>
+    </div>
+
+    <!-- Revoke Access Rights -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <!-- Modal body -->
+            <div class="modal-body">
+              Revoke <span *ngFor="let right of revokeThis.accessRights" class="badge badge-info">
+                  {{right}}
+              </span> From {{revokeThis.careProviderId}}
+              <button type="button" class="modal-btn delete" data-dismiss="modal" (click) = "revokeAccessRights(revokeThis.careProviderId)">Yes</button>
+              <button type="button" class="modal-btn update" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+
+  <div class="notifier" *ngIf="showNotifier">
+    <div class="row">
+      <div class="col-2">
+          <span class="spinner-border spinner-border-lg my-spinner"></span>
+      </div>
+      <div class="col-10 notifier-item">
+          <span>Revoking Access Rights</span>
+      </div>
+
+    </div>
+  </div>
+</div>

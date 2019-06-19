@@ -1,0 +1,13 @@
+div.notfound {
+  text-align: center;
+  margin-top: 30px;
+}
+
+button.refresh {
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: rgb(94, 167, 235);
+  color: white;
+}
+

@@ -1,0 +1,125 @@
+<div class="health-record-page">
+  <!-- Navigation -->
+  <div class="health-nav">
+      <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#view-record" (click)="setViewToHome()">View Records</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#create-record">Create Record</a>
+          </li>
+      </ul>
+  </div>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+      <!-- View health records -->
+      <div id="view-record" class="tab-pane active">
+        <!-- View all health records-->
+        <div class="view-all-records" *ngIf="viewAll">
+          <div>
+            <div *ngIf="yesData">
+            <br><button class="refresh" (click)="getHealthRecords()">Refresh</button><br>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th class="id">#</th>
+                  <th class="col2">Owner</th>
+                  <th class="col1">Symptoms</th>
+                  <th class="col1">Procedure</th>
+                  <th class="col1">Results</th>
+                  <th class="col1">Treatment</th>
+                  <th class="btns">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let healthRecord of healthRecords; let i = index">
+                  <td class="hyphens">{{ i + 1 }}.</td>
+                  <td class="hyphens">{{ healthRecord.owner.email}}</td>
+                  <td class="hyphens">{{ healthRecord.healthRecord.symptoms[0] }}</td>
+                  <td class="hyphens">{{ healthRecord.healthRecord.diagnosis[0].procedure }}</td>
+                  <td class="hyphens">{{ healthRecord.healthRecord.diagnosis[0].result }}</td>
+                  <td class="hyphens">{{ healthRecord.healthRecord.treatment[0] }}</td>
+                  <td style="text-align: center">
+                    <button class="auth-btn btn-revoke {{healthRecord.delete}}" type="button" data-toggle="modal" data-target="#myModal" (click)="setRecordToDelete(healthRecord.healthRecord.healthRecordId)">Delete</button>
+                    <button class="auth-btn btn-update {{healthRecord.update}}" type="button" (click) = "setRecordToUpdate(healthRecord.healthRecord)">Update</button>
+                    <button class="auth-btn btn-view {{healthRecord.read}}" type="button" (click) = "setRecordToView(healthRecord)">view</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+
+            <div *ngIf="noData">
+              <app-error404 [childMessage]="parentMessage"></app-error404>
+              <div class="refresh-after-err">
+                  <button class="refresh2" (click)="getHealthRecords()">Refresh</button>
+              </div>
+
+            </div>
+
+            <div *ngIf="fetchingData">
+              <app-loading-page [messageFromParent]="'Fetching Health Records'"></app-loading-page>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="showUpdateRecord">
+          <app-update-health-record (doneEvent)="setViewToHome($event)" [updateChildMessage]="recordToUpdate"></app-update-health-record>
+        </div>
+
+
+        <!-- View A single record-->
+        <div *ngIf="viewOne">
+          <app-view-health-record (doneEvent)="afterdelete($event)" [childMessage]="recordToView"></app-view-health-record>
+        </div>
+
+
+        <!-- Delete record Modal -->
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body">
+                  Are you sure you want to delete the record?
+                  <button type="button" class="modal-btn delete" data-dismiss="modal" (click) = "deleteRecord()">Yes</button>
+                  <button type="button" class="modal-btn update" data-dismiss="modal">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+
+      <!-- Create Health Record -->
+      <div id="create-record" class="container tab-pane fade">
+        <app-create-health-record [childMessage]="myParentMessage"></app-create-health-record>
+      </div>
+
+
+      <div id="rev-auth" class="container tab-pane fade"></div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" style="width:80%;"  role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <app-update-health-record (doneEvent)="setViewToHome($event)" [updateChildMessage]="recordToUpdate"></app-update-health-record>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+</div>

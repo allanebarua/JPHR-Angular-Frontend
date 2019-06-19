@@ -1,0 +1,64 @@
+<div>
+  <div *ngIf="healthRecords; else noData">
+    <div *ngIf="view=='list-view'">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th class="id">#</th>
+            <th class="owner">Owner</th>
+            <th class="blood-group">Blood Group</th>
+            <th class="other">Allergies</th>
+            <th class="btns"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let healthRecord of summaryRecord; let i = index">
+            <td class="hyphens">{{ i + 1 }}</td>
+            <td class="hyphens">{{ healthRecord.owner.email }}</td>
+            <td class="hyphens">{{ healthRecord.healthRecord.bloodGroup }}</td>
+            <td class="hyphens">{{ healthRecord.healthRecord.allergies[0] }}</td>
+            <td>
+              <button class="auth-btn btn-update {{healthRecord.update}}" type="button" (click) = "setRecordToUpdate(healthRecord.healthRecord)">Update</button>
+              <button class="auth-btn btn-view" type="button" (click) = "setRecordToView(healthRecord)">view</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div *ngIf="view=='detailed-view'">
+      <app-summary-record-detailed-view [summaryRecord]="recordToView"></app-summary-record-detailed-view>
+    </div>
+
+    <div *ngIf="view=='update-record'">
+      <app-update-summary-record [childMessage]="recordToUpdate"></app-update-summary-record>
+    </div>
+  </div>
+
+  <ng-template #noData>
+   <app-error404 [childMessage]="parentMessage"></app-error404>
+  </ng-template>
+</div>
+
+ <!-- Modal -->
+ <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <app-summary-record-detailed-view [summaryRecord]="recordToView"></app-summary-record-detailed-view>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+

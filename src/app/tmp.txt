@@ -1,0 +1,63 @@
+<div class="my-nav">
+    <img class="chain-img" src="../../../assets/icons/lock.png">
+    <p class="mydata">JILINDE PROVIDER'S PORTAL</p>
+    <button class="btn-right" type="button" (click)="logout()">{{careProvider.user.name}}<span><img src="./../../../assets/icons/logout.png" style="margin-left: 10px;" alt="Italian Trulli"></span></button>
+</div>
+
+<div class="after-nav">
+  <div class='side-nav'>
+    <div class='side-nav-entry'>
+        <button class="btn-side-nav" [style.background-color]="healthClicked ? 'rgb(30, 75, 172)' : 'rgb(47, 86, 172)'" type="button" (click) = "setPage('health')">
+          <img class='side-nav-img' src="./../../../assets/icons/ic_folder_white_48dp.png">
+          Medical Records
+        </button>
+    </div>
+
+    <div class='side-nav-entry'>
+        <button class="btn-side-nav" [style.background-color]="summaryClicked ? 'rgb(30, 75, 172)' : 'rgb(47, 86, 172)'" type="button" (click) = "setPage('summary')">
+          <img class='side-nav-img' src="./../../../assets/icons/ic_local_library_white_48dp.png">
+          Summary Medical Records
+        </button>
+    </div>
+
+    <div class='side-nav-entry'>
+        <button class="btn-side-nav" [style.background-color]="authClicked ? 'rgb(30, 75, 172)' : 'rgb(47, 86, 172)'" type="button" (click) = "setPage('authorization')">
+          <img class='side-nav-img' src="./../../../assets/icons/ic_https_white_48dp.png">
+          Authorizations
+        </button>
+    </div>
+
+    <div class='side-nav-entry'>
+        <button class="btn-side-nav" [style.background-color]="notClicked ? 'rgb(30, 75, 172)' : 'rgb(47, 86, 172)'" type="button" (click) = "setPage('notification')">
+          <img class='side-nav-img' src="./../../../assets/icons/baseline_notification_important_white_18dp.png">
+          Notifications
+        </button>
+    </div>
+
+    <div class="jphr-version">
+      <pre>jphr v 0.0.1</pre>
+    </div>
+  </div>
+
+  <div class="main-content">
+
+    <!-- Medical Records page-->
+    <div *ngIf ="pageToshow == 'health'">
+        <app-health-records [myParentMessage]="parentMessage"></app-health-records>
+    </div>
+
+    <!-- Summary Medical Record page-->
+    <div *ngIf ="pageToshow == 'summary'">
+        <app-summary-medical-record [myParentMessage]="parentMessage"></app-summary-medical-record>
+    </div>
+
+    <!-- Authorization page -->
+    <div *ngIf ="pageToshow == 'authorization'">
+        <app-care-provider-authorization></app-care-provider-authorization>
+    </div>
+
+    <!-- Notifications Page-->
+    <div *ngIf ="pageToshow == 'notification'">
+    </div>
+  </div>
+</div>

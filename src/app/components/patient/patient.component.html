@@ -1,0 +1,90 @@
+<div class="my-nav">
+  <img class="chain-img" src="../../../assets/icons/lock.png">
+  <p class="mydata">JILINDE PATIENT'S PORTAL</p>
+  <button class="btn-right" type="button" (click)="logout()">{{patient.user.name}}<span><img src="./../../../assets/icons/logout.png" style="margin-left: 10px;" alt="Italian Trulli"></span></button>
+</div>
+
+<div class="after-nav">
+  <div class='side-nav'>
+    <div class='participant'>
+      <div class="row">
+        <div class="col-4">
+            <img class="my-img" src="./../../../assets/icons/man.png" alt="Card image">
+        </div>
+        <div class="col-8 my-p">
+          <p>Welcome to jilinde!</p>
+          <p>{{patient.user.name}}</p>
+        </div>
+        </div>
+      </div>
+      <hr><br>
+      <div class="pat-menu">
+        Menu
+      </div>
+    <div class='side-nav-entry'>
+        <button class="btn-side-nav" [style.background-color]="healthClicked ? 'rgb(30, 75, 172)' : 'rgb(47, 86, 172)'" type="button" (click) = "setPage('health')">
+          <img class='side-nav-img' src="./../../../assets/icons/medical-records.png">
+          Medical Records
+        </button>
+    </div>
+
+    <div class='side-nav-entry'>
+        <button class="btn-side-nav" [style.background-color]="summaryClicked ? 'rgb(30, 75, 172)' : 'rgb(47, 86, 172)'" type="button" (click) = "setPage('summary')">
+          <img class='side-nav-img' src="./../../../assets/icons/emergency-kit.png">
+          Emergency Aid Record
+        </button>
+    </div>
+
+    <div class='side-nav-entry'>
+        <button class="btn-side-nav" [style.background-color]="authClicked ? 'rgb(30, 75, 172)' : 'rgb(47, 86, 172)'" type="button" (click) = "setPage('authorization')">
+          <img class='side-nav-img' src="./../../../assets/icons/police (1).png">
+          Authorizations Management
+        </button>
+    </div>
+
+    <div class='side-nav-entry'>
+      <button class="btn-side-nav" [style.background-color]="recordClicked ? 'rgb(30, 75, 172)' : 'rgb(47, 86, 172)'" type="button" (click) = "setPage('reports')">
+        <img class='side-nav-img' src="./../../../assets/icons/folder.png">
+        My Reports
+      </button>
+  </div>
+
+  <div class='side-nav-entry'>
+    <button class="btn-side-nav" [style.background-color]="providersClicked ? 'rgb(30, 75, 172)' : 'rgb(47, 86, 172)'" type="button" (click) = "setPage('providers')">
+      <img class='side-nav-img' src="./../../../assets/icons/doctor2.png">
+      My Care Providers
+    </button>
+</div>
+
+    <div class="jphr-version">
+      <pre>jphr v 0.0.1</pre>
+    </div>
+  </div>
+
+  <div class="main-content">
+
+    <!-- Medical Records page-->
+    <div *ngIf ="pageToshow == 'health'">
+        <app-health-records [myParentMessage]="parentMessage"></app-health-records>
+    </div>
+
+    <!-- Summary Medical Record page-->
+    <div *ngIf ="pageToshow == 'summary'">
+        <app-summary-medical-record [myParentMessage]="parentMessage"></app-summary-medical-record>
+    </div>
+
+    <!-- Authorization page -->
+    <div *ngIf ="pageToshow == 'authorization'">
+        <app-authorization></app-authorization>
+    </div>
+
+    <!-- Reports Page-->
+    <div *ngIf ="pageToshow == 'reports'">
+      <app-patient-reports></app-patient-reports>
+    </div>
+
+    <div *ngIf ="pageToshow == 'providers'">
+      <app-my-providers></app-my-providers>
+    </div>
+  </div>
+</div>

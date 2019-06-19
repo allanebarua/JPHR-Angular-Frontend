@@ -1,0 +1,144 @@
+div.health-record-page {
+  margin-top: 40px;
+  width: 75%;
+  margin-left: 20%;
+  margin-right: 5%;
+}
+
+button {
+  text-decoration: none;
+  border-style: none;
+}
+
+button.btn-view {
+  background-color: green;
+}
+
+button.btn-revoke {
+  background-color: red;
+}
+
+button.btn-disable {
+  opacity: 0.50;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+button.btn-update {
+  background-color:blue;
+}
+
+.badge-info {
+  margin-left: 2px;
+  font-size: 11px;
+}
+
+button:disabled{
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+button.auth-btn {
+  width: 70px;
+  height: 30px;
+  margin-left: 3px;
+  font-size: 13px;
+  color: white;
+  float:right;
+}
+
+#myModal {
+  padding: 30px;
+}
+
+
+table {
+  width: 95%;
+  margin-top: 30px;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  table-layout: fixed;
+}
+
+.hyphens {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+th.id {
+  width: 3%;
+}
+
+th.col1 {
+  width: 11.75%;
+}
+
+th.col2 {
+  width: 18%;
+}
+
+th.btns {
+  width: 20%;
+}
+
+.nav-item {
+  width: 50%;
+}
+
+button.modal-btn {
+  width: 70px;
+  height: 30px;
+  margin-left: 3px;
+  font-size: 13px;
+  color: white;
+  float:right;
+}
+
+button.delete {
+  background-color: red;
+}
+
+button.update {
+  background-color:blue;
+}
+
+button.refresh {
+  background-color: rgb(70, 118, 223);
+  float: right;
+  width: 100px;
+  height: 30px;
+  margin-right: 2.5%;
+  color: white;
+  border-radius: 3px;
+}
+
+div.refresh-after-err {
+  width:100%;
+  text-align: center;
+}
+
+button.refresh2 {
+  background-color:rgb(70, 118, 223);
+  width: 100px;
+  height: 30px;
+  color: white;
+  border-radius: 4px;
+}
+
+thead {
+  background-color: rgb(101, 147, 247);
+  color: white;
+  font-size: 18px;
+  border-top-left-radius: 10px;
+}
+
+tbody,
+tr,
+td {
+  border-bottom: 2px solid rgb(101, 147, 247);
+  border-top: 2px solid rgb(101, 147, 247);
+}

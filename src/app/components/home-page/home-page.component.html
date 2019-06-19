@@ -1,0 +1,94 @@
+<div id="bg" *ngIf="home; else authentication">
+    <img src="./../../../assets/images/docter-bacground.jpg" alt="">
+    <div class='nav-label'>
+      Login / Register
+    </div>
+    <div class="myhr">
+      <hr>
+    </div>
+    <div class="myhr2">
+        <hr class="join">
+    </div>
+    <div class="nav-bar">
+        <button class="nav-btns" (click)="setParticipant('Patient')">Patient</button>
+        <button class="nav-btns" (click)="setParticipant('CareProvider')">Care Provider</button>
+    </div>
+    <div class="jphr">
+        JILINDE PORTABLE HEALTH RECORDS
+    </div>
+    <div class="description">
+        <div class="row">
+          <div class="col-4">
+            <div class="card">
+                <div class="card-header">
+                  <div class="row">
+                    <div class="col-4">
+                        <img class="my-img" src="../../../assets/icons/encrypted-1.png">
+                    </div>
+                    <div class="col-8">
+                        <h2>Data Protection</h2>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                    <p>
+                      The use of a private, permissioned Hyperledger Fabric blockchain network technology has enhanced
+                      privacy and security of patients medical records.
+                    </p>
+                </div>
+              </div>
+          </div>
+
+
+          <div class="col-4">
+              <div class="card">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-4">
+                          <img class="my-img" src="../../../assets/icons/boss-1.png">
+                      </div>
+                      <div class="col-8">
+                          <h2>Ownership</h2>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                      <p>
+                          One of the main objectives of the system is to place a patient in control
+                          of his or her medical records. The patient dictates which health care provider
+                          can get which access rights to his or her medical records.
+                      </p>
+                  </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header">
+                      <div class="row">
+                        <div class="col-4">
+                            <img class="my-img" src="../../../assets/icons/medic-suitcase.png">
+                        </div>
+                        <div class="col-8">
+                            <h2>Emergency Aid</h2>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            The summary medical record provided by the system provides
+                            a harmless subset of a patient's medical record open for viewing by any
+                            healthcare provider during emergency situations.
+                          </p>
+                    </div>
+                  </div>
+              </div>
+        </div>
+      </div>
+</div>
+
+<ng-template #authentication>
+    <app-authentication (doneEvent)="setViewToHome($event)" [participantType]="participantType"></app-authentication>
+</ng-template>

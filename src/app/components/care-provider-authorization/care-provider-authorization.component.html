@@ -1,0 +1,83 @@
+<div class='auth-page'>
+  <div class='auth-nav'>
+      <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#view-auth" (click)="receiveMessage('home')">View Authorizations</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#request-auth">Request Authorization</a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#requested-auths">View Authorization Requests</a>
+          </li>
+      </ul>
+  </div>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+
+      <!-- View authorizations -->
+      <div id="view-auth" class="container tab-pane active">
+          <div class="container">
+            <div *ngIf="yesData">
+              <div *ngIf="authList; else updateAuth">
+                  <br><button class="refresh" (click)="getAuthorizations()">Refresh</button><br><br>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Patient</th>
+                    <th>Care Provider</th>
+                    <th>Access Rights</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let authData of currentAuthData; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ authData.authid }}</td>
+                    <td>{{ authData.authorization[0].careProviderId }}</td>
+                    <td>
+                      <span *ngFor="let right of authData.authorization[0].accessRights" class="badge badge-info">
+                        {{right}}
+                      </span>
+                    </td>
+                    <td>
+                      <button class="auth-btn btn-update" type="button" (click)="requestMoreRights(authData.authorization[0], authData.authid)">Request More</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+
+              <ng-template #updateAuth><br><br>
+                <app-request-more-access-rights (messageEvent)="receiveMessage($event)" [childMessage]="dataToUpdate"></app-request-more-access-rights>
+              </ng-template>
+            </div>
+
+            <div *ngIf="noData">
+                <app-error404 [childMessage]="noAuthMessage"></app-error404>
+                <div class="refresh-after-err">
+                  <button class="refresh2" (click)="getAuthorizations()">Refresh</button>
+                </div>
+            </div>
+
+            <!-- Fetching summary medical records-->
+            <div *ngIf="fetchingData">
+              <app-loading-page [messageFromParent]="'Fetching Authorization Records'"></app-loading-page>
+            </div>
+          </div>
+          </div>
+
+      <!-- Request Authorization -->
+      <div id="request-auth" class="container tab-pane fade">
+        <app-request-authorization></app-request-authorization>
+      </div>
+
+      <div id="requested-auths" class="tab-pane fade">
+          <app-authorization-request-view [myParentMessage]="'NO MESSAGE'"></app-authorization-request-view>
+      </div>
+  </div>
+</div>

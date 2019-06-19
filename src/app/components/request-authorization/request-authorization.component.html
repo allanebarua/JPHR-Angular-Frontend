@@ -1,0 +1,56 @@
+<!-- Request Authorization -->
+<div id="request-auth" class="container">
+    <br><br>
+      <form class = 'request-auth' [formGroup]="requestAccessForm" (ngSubmit)="requestAccess()">
+          <div class="alert {{alertMessage.style}} alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              <strong>{{alertMessage.heading}} </strong> {{alertMessage.body}}
+          </div><br>
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text field-size">Patient <span class='required'>*</span></span>
+              </div>
+              <input type="email" class="form-control" placeholder="Patient's Email" formControlName="subject">
+          </div>
+
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text field-size">Access Rights<span class='required'>*</span></span>
+              </div>
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Read" formControlName="read">
+                  <label class="form-check-label" for="inlineCheckbox1">Read</label>
+                </div>
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Create" formControlName="create">
+                  <label class="form-check-label" for="inlineCheckbox2">Create</label>
+              </div>
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Update" formControlName="update">
+                  <label class="form-check-label" for="inlineCheckbox1">Update</label>
+                </div>
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Delete" formControlName="delete">
+                  <label class="form-check-label" for="inlineCheckbox2">Delete</label>
+              </div>
+          </div><br>
+
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text field-size">Reason <span class='required'>*</span></span>
+              </div>
+              <textarea class="form-control" rows="2" placeholder="Why do you want access ..." formControlName="reason"></textarea>
+          </div>
+
+          <div class='submit-btn'>
+              <button *ngIf="submitBtn; else notsubmitBtn" name="submit" type="submit" id="submit">Submit</button>
+              <ng-template #notsubmitBtn>
+                <button id="submit" disabled>
+                    <span class="spinner-border spinner-border-sm"></span>
+                    Submitting ...
+                </button>
+              </ng-template>
+          </div>
+      </form>
+  </div>
+

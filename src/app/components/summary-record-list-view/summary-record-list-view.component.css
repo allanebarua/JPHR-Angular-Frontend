@@ -1,0 +1,84 @@
+table {
+  width: 90%;
+  margin-top: 30px;
+  margin-left: 5%;
+  margin-right: 5%;
+  table-layout: fixed;
+}
+
+.hyphens {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+th.id {
+  width: 5%;
+}
+th.blood-group {
+  width: 20%;
+}
+th.owner {
+  width: 25%;
+}
+th.allergies {
+  width: 30%;
+}
+th.btns {
+  width: 20%;
+}
+
+button {
+  text-decoration: none;
+  border-style: none;
+}
+
+button.btn-view {
+  background-color: green;
+}
+
+button.btn-disable {
+  opacity: 0.50;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+button.btn-update {
+  background-color:blue;
+}
+
+button:disabled{
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+button.auth-btn {
+  width: 70px;
+  height: 30px;
+  margin-left: 3px;
+  font-size: 13px;
+  color: white;
+  float:right;
+}
+
+
+button.update {
+  background-color:blue;
+}
+
+thead {
+  background-color: rgb(101, 147, 247);
+  color: white;
+  font-size: 18px;
+  border-top-left-radius: 10px;
+}
+
+tbody,
+tr,
+td {
+  border-bottom: 2px solid rgb(101, 147, 247);
+  border-top: 2px solid rgb(101, 147, 247);
+}

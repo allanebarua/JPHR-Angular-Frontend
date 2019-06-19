@@ -1,0 +1,135 @@
+.shadow-textarea textarea.form-control::placeholder input.input1::placeholder{
+  font-weight: 300;
+}
+.shadow-textarea textarea.form-control{
+  padding-left: 0.8rem;
+}
+
+form.create-record {
+  border: 1.5px solid rgb(94, 167, 235);
+  padding: 30px;
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  width: 70%;
+  display: inline-block;
+}
+
+#submit {
+  width: 100%;
+  height: 40px;
+  border-radius: 3px;
+  background-color: rgb(94, 167, 235);
+  color: white;
+  text-decoration: none;
+  border: 1px solid rgb(94, 167, 235);
+}
+
+.input1 {
+  width: 100%;
+  height: 50px;
+  padding-left: 7px;
+}
+
+label {
+  color:rgb(94, 167, 235);
+}
+
+.next{
+  background-color: green;
+  border: 1px solid green;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  width: 80px;
+  height: 30px;
+  font-size: 10px;
+  border-radius: 2px;
+  float: right;
+}
+
+.previous {
+  background-color: green;
+  border: 1px solid green;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  width: 80px;
+  height: 30px;
+  font-size: 10px;
+  border-radius: 2px;
+  float: left;
+}
+
+
+button:disabled{
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+button.disabledPreviousBtn {
+  opacity: 0.65;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+input.diag-input {
+  width: 100%;
+  height: 50px;
+  border: 1px solid rgb(94, 167, 235);
+  padding-left: 5px;
+  margin: 5px;
+  border-radius: 3px;
+}
+
+.form-control {
+  border: 1px solid rgb(94, 167, 235);
+}
+
+div.myrecord {
+  text-align: center;
+}
+
+.field-size {
+  width: 100px;
+}
+
+span.required {
+  color:red;
+}
+
+.add-btn {
+  font-size: 20px;
+  text-align: center;
+  color: blue;
+}
+
+p.diag-item {
+  text-align: left;
+  background-color: azure;
+  padding-left: 5px;
+}
+
+button.remove-diag {
+  float: right;
+  text-decoration: none;
+  border: none;
+  color: red;
+}
+
+.diag-headings {
+  width: 150px;
+}
+
+.diag-data {
+  text-align: left;
+  margin-left: 5px;
+  margin-top: 5px;
+}

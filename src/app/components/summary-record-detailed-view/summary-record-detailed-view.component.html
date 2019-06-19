@@ -1,0 +1,136 @@
+<div class="container summary-detailed-view">
+  <div>
+  <div class="view-record" *ngIf="viewRecord; else update">
+    <div class = "shadow p-4 mb-4 bg-light">
+      <!-- Owner data-->
+      <div class="row">
+        <div class="col-5">
+          <div class="card owner">
+            <img class="card-img-top" src="./../../../assets/images/default-owner.jpg" alt="Card image" style="width:100%;height:100%">
+          </div>
+        </div>
+
+        <div class="col-7">
+          <div class="owner-profile" style="width:400px">
+            <div class="owner-heading">
+              <pre class="green-heading">Owner: Patient's Details</pre>
+              <hr>
+            </div>
+            <div class='profile-entry'>
+                <div class="data-element">Name</div>
+                <div class="data-itself"><pre>{{summaryRecord.owner.participantName.firstName}} {{summaryRecord.owner.participantName.lastName}}</pre></div>
+            </div>
+            <div class='profile-entry'>
+                <div class="data-element">Gender</div>
+                <div class="data-itself"><pre>{{summaryRecord.owner.gender}}</pre></div>
+            </div>
+            <div class='profile-entry'>
+                <div class="data-element">DOB</div>
+                <div class="data-itself"><pre>{{summaryRecord.owner.dob}}</pre></div>
+            </div>
+            <div class='profile-entry'>
+                <div class="data-element">Phone</div>
+                <div class="data-itself"><pre>{{summaryRecord.owner.phone[0]}}</pre></div>
+            </div>
+            <div class='profile-entry'>
+                <div class="data-element">Email</div>
+                <div class="data-itself"><pre>{{summaryRecord.owner.email}}</pre></div>
+            </div>
+            <div class='profile-entry'>
+                <div class="data-element">Address</div>
+                <div class="data-itself"><pre>{{summaryRecord.owner.participantAddress.box}}, {{summaryRecord.owner.participantAddress.town}}</pre></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class = "shadow-sm p-4 mb-4 bg-light">
+      <div class="record-heading">
+        <button type="button" class="action-btn update" (click) = "updateRecord()">Update Record</button>
+        <button type="button" class="action-btn reload" (click) = "getSummaryMedicalRecord()">Reload Data</button>
+      </div>
+      <div class="my-btn-group">
+        <button class="ind-btn" (click)="toggleView('primary')"> Primary Medical Data</button>
+        <button class="ind-btn" (click)="toggleView('secondary')"> Important Medical Notes</button>
+        <button class="ind-btn" (click)="toggleView('emergency')"> Emergency Contacts</button>
+      </div>
+
+    <!-- Medical record data-->
+    <div *ngIf="recordAvailable; else fetchmydate">
+      <!-- Primary Medical Data-->
+      <div *ngIf="dataToView=='primary'">
+        <div class="my-summary-data">
+          <h3>Blood Group</h3>
+          <p>{{summaryRecord.healthRecord.bloodGroup}}</p>
+          <div class="allergies">
+            <h3>Allergies</h3>
+            <ul class="list-group list-group-flush" *ngFor="let record of summaryRecord.healthRecord.allergies; let i = index">
+              <li class="list-group-item">{{record}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secondary level data-->
+      <div *ngIf="dataToView=='secondary'">
+        <div class="my-summary-data">
+          <table id="t" class="table table-hover">
+            <thead>
+              <tr>
+                <th class="desc-num"><h3>#</h3></th>
+                <th class="about-col"><h3>About</h3></th>
+                <th class="desc-col"><h3>Description</h3></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let info of summaryRecord.healthRecord.otherInfo; let i = index">
+                <td class="hyphens">{{i + 1}}</td>
+                <td class="hyphens">{{info.about}}</td>
+                <td class="hyphens">{{info.body}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Emergency record-->
+      <div *ngIf="dataToView=='emergency'">
+        <div class="my-summary-data">
+          <table id="t" class="table table-hover">
+            <thead>
+              <tr>
+                <th class="desc-num"><h3>#</h3></th>
+                <th class="desc-col"><h3>Designation</h3></th>
+                <th class="about-col"><h3>Name</h3></th>
+                <th class="desc-col"><h3>Email</h3></th>
+                <th class="desc-col"><h3>Phone</h3></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let contact of summaryRecord.healthRecord.emergencyContacts; let i = index">
+                <td class="hyphens">{{i + 1}}</td>
+                <td class="hyphens">{{contact.designation}}</td>
+                <td class="hyphens">{{contact.name}}</td>
+                <td class="hyphens">{{contact.email}}</td>
+                <td class="hyphens">{{contact.phone}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #fetchmydate>
+        <app-loading-page [messageFromParent]="'Refreshing Summary Medical Record'"></app-loading-page>
+    </ng-template>
+
+      </div>
+    </div>
+
+
+    <ng-template #update>
+      <app-update-summary-record (doneEvent)="setViewToHome($event)" [childMessage]="summaryRecord.healthRecord"></app-update-summary-record>
+    </ng-template>
+    </div>
+</div>

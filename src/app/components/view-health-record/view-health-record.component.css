@@ -1,0 +1,131 @@
+div.owner {
+  float: left;
+  width: 300px;
+  height: 300px;
+}
+
+div.owner-profile {
+  float: right;
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+button.btn-disable {
+  opacity: 0.50;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+h3 {
+  font-size: 18px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  color: rgb(94, 167, 235);
+}
+
+button.action-btn {
+  width: 130px;
+  height: 30px;
+  margin-left: 3px;
+  font-size: 13px;
+  color: white;
+  float:right;
+}
+
+button.modal-btn {
+  width: 70px;
+  height: 30px;
+  margin-left: 3px;
+  font-size: 13px;
+  color: white;
+  float:right;
+}
+
+button.delete {
+  background-color: red;
+}
+
+button.update {
+  background-color:blue;
+}
+
+button {
+  text-decoration: none;
+  border-style: none;
+}
+
+button.ind-btn {
+  width: 33.333%;
+  padding: 10px;
+  height: 50px;
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+}
+
+div.the-records {
+  margin-top: 20px;
+}
+
+div.my-summary-data {
+  margin-left: 20px;
+}
+
+th.about-col {
+  width: 30%;
+}
+th.desc-col {
+  width: 67%;
+}
+th.desc-num {
+  width: 3%;
+}
+table {
+  width: 100%;
+  margin: 20px auto;
+  table-layout: fixed;
+}
+
+.hyphens {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+div.record-detail {
+  margin-top: 30px;
+}
+
+.profile-data {
+  width: 200px;
+  font-size: 20px;
+}
+
+
+div.profile-entry {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+div.data-element {
+  width: 30%;
+  float: left;
+  font-size: 18px;
+  color: rgb(37, 37, 187);
+}
+
+div.owner-heading {
+  font-size: 20px;
+  color: rgb(37, 37, 187);
+  font-weight: bold;
+}
+
+pre.green-heading {
+  color: green;
+}
+
+span {
+  font-weight: bold;
+  font-size: 18px;
+}

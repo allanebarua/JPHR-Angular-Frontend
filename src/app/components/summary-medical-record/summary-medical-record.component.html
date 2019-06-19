@@ -1,0 +1,205 @@
+<div class='summary-record-page'>
+  <div class='summary-nav'>
+      <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#view-record">View Record</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#create-record">Create Record</a>
+          </li>
+      </ul>
+  </div>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+      <!-- View summary medical record -->
+      <div id="view-record" class="tab-pane active">
+
+        <!-- Summary Medical records found-->
+        <div *ngIf="yesData">
+          <div *ngIf="myParentMessage.participantType === 'CareProvider'; else detailedView">
+              <app-summary-record-list-view (reloadEvent)="getSummaryMedicalRecord()" [summaryRecord]="healthRecords"></app-summary-record-list-view>
+          </div>
+          <ng-template #detailedView>
+            <app-summary-record-detailed-view (reloadEvent)="getSummaryMedicalRecord()" [summaryRecord]="healthRecords[0]"></app-summary-record-detailed-view>
+          </ng-template>
+        </div>
+
+
+        <!-- Fetching summary medical records-->
+        <div *ngIf="fetchingData">
+            <app-loading-page [messageFromParent]="'Fetching Summary Medical Records'"></app-loading-page>
+        </div>
+
+        <!-- No data on summary medical record found-->
+        <div *ngIf="noData">
+            <app-error404 [childMessage]="parentMessage"></app-error404>
+            <div class="refresh-after-err">
+              <button class="refresh2" (click)="getSummaryMedicalRecord()">Refresh</button>
+            </div>
+        </div>
+      </div>
+
+
+      <div id="create-record" class="container tab-pane myform">
+        <br><br>
+        <form class = 'creat-summary-form' [formGroup]="createRecordForm" (ngSubmit)="createRecord()">
+            <div class="alert {{alertMessage.style}} alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{{alertMessage.heading}} </strong> {{alertMessage.body}}
+            </div><br>
+          <div *ngIf="sumPage ==='first'">
+
+            <!-- Owner page only required for careprovider-->
+            <div *ngIf="page === 'owner'">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text field-size">Owner <span class='required'>*</span></span>
+                    </div>
+                    <input type="email" class="form-control" formControlName="owner" #owner1>
+                </div>
+
+                <button type="button" class="previous" disabled><<Previous</button>
+                <button type="button" class="next" (click)="pageToShow('mainRecord')">Next>></button>
+            </div>
+
+            <div *ngIf="page === 'mainRecord'">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text field-size">Blood Group <span class='required'>*</span></span>
+                </div>
+                <select name="bloodGroup" class="form-control" formControlName="bloodGroup">
+                    <option value="Blood Group A" selected="selected">Blood Group A</option>
+                    <option value="Blood Group B">Blood Group B</option>
+                    <option value="Blood Group AB">Blood Group AB</option>
+                    <option value="Blood Group O">Blood Group O</option>
+                </select>
+            </div>
+
+            <div class = "shadow-lg p-4 mb-4 bg-light">
+            <div class="myallegies">
+              <h4>Allergies</h4>
+              <div class='loaded-diag'>
+                  <div *ngFor="let allergy of allergies; let i = index">
+                    <p class="diag-item">
+                      <button type="button" class="remove-allergy" (click)="removeAllergy(i)">X</button>
+                      <span class='diag-headings'><strong>{{i + 1}} : </strong></span>{{allergy}}<br>
+                    </p>
+                  </div>
+              </div>
+              <br>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text field-size">Allergies <span class='required'>*</span></span>
+                </div>
+                <input id="allergies" class="form-control" type="text" formControlName="allergies" #a>
+                <button type="button" class="add-btn" (click)="addAllergy(a.value)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class = "shadow-lg p-4 mb-4 bg-light">
+            <div class="other-record">
+              <h4>Important Medical Notes</h4>
+              <div class='loaded-diag'>
+                  <div *ngFor="let diag of otherInfo; let i=index">
+                    <p class="diag-item">
+                      <button type="button" class="remove-diag" (click)="removeOtherinfo(i)">X</button>
+                      <span class='diag-headings'><strong>Heading: </strong></span>{{diag.about}}<br>
+                      <span class='diag-headings'><strong>Body : </strong></span>{{diag.body}}
+                    </p>
+                  </div>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text field-size">About <span class='required'>*</span></span>
+                </div>
+                <input id="about" class="form-control" type="text" formControlName="about" #b>
+              </div>
+
+              <div class="input-group mb-3">
+                <span class="input-group-text field-size">Note <span class='required'>*</span></span>
+                <textarea id="body" row="4" class="form-control" placeholder="write something about the note.." formControlName="body" #c></textarea>
+                <button type="button" class="add-btn" (click)="addOtherInfo(b.value, c.value)">+</button>
+              </div>
+            </div>
+
+            </div>
+            <div >
+              <button *ngIf="myParentMessage.participantType === 'CareProvider'" type="button" class="previous" (click)="pageToShow('owner')"><<Previous</button>
+              <button *ngIf="myParentMessage.participantType === 'Patient'" type="button" class="previous" disabled>Owner</button>
+              <button type="button" class="next2" (click)="toggleEntryForm('second')">Emergency Contact</button><br>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="sumPage === 'second'">
+            <div class = "shadow-lg p-4 mb-4 bg-light">
+                <div class="other-record">
+                    <div class="notifier">
+                        <div class="row">
+                          <div class="col-1 notifier-item">
+                              <span>{{emergencyContact.length}}</span>
+                          </div>
+                          <div class="col-10 notifier-item">
+                              <span>Contact(s) added</span>
+                          </div>
+
+                        </div>
+                    </div>
+                  <h4 style="float:left;">Emergency Contacts</h4>
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text field-size">Designation <span class='required'>*</span></span>
+                    </div>
+                    <select name="designation" class="form-control">
+                        <option value="Family" selected="selected" #desg1>Family</option>
+                        <option value="Friend" #desg2>Friend</option>
+                        <option value="Employer" #desg3>Employer</option>
+                        <option value="Doctor" #desg4>Doctor</option>
+                    </select>
+                  </div>
+
+                  <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text field-size">Name <span class='required'>*</span></span>
+                      </div>
+                      <input id="name" class="form-control" type="text" #name>
+                  </div>
+
+
+                  <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text field-size">Phone <span class='required'>*</span></span>
+                      </div>
+                      <input id="phone" class="form-control" type="text" #phone>
+                  </div>
+
+
+                  <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text field-size">Email <span class='required'>*</span></span>
+                      </div>
+                      <input id="email" class="form-control" type="text" #email>
+                  </div>
+                </div>
+
+                <button type="button" class="previous" (click)="toggleEntryForm('first')"><<Medical Data </button>
+                <button type="button" class="next" (click)="addContactRecord(desg1, desg2, desg3, desg4, name.value, phone.value,email.value)">Add Contact</button><br><br>
+                <div class='submit-btn'>
+                    <button *ngIf="submitBtn; else notsubmitBtn" name="submit" type="submit" id="submit">Submit</button>
+                    <ng-template #notsubmitBtn>
+                      <button id="submit" disabled>
+                          <span class="spinner-border spinner-border-sm"></span>
+                          Submitting ...
+                      </button>
+                    </ng-template>
+                </div>
+                </div>
+        </div>
+        </form>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,164 @@
+<div class='nav-bar'>
+  <button type="button" class="home" (click)="goHome()">Home</button>
+</div>
+
+<div class="my-body">
+  <div class="main-content">
+      <div class="alert {{alertmessage.style}} alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <strong>{{alertmessage.heading}} </strong> {{alertmessage.body}}
+      </div>
+
+      <button type="button" class="{{btnStyle2}}" (click)="toggleUserAction('signup')">Register</button>
+      <button type="button" class="{{btnStyle1}}" (click)="toggleUserAction('signin')">Sign in</button><br><br>
+
+      <div class='forms'>
+          <div *ngIf="formToshow == 'signup'">
+            <form class='register-form' [formGroup]="signUpForm" (ngSubmit)="signUp()" autocomplete="off">
+              <div *ngIf="memberDetailsEntry; else logginDetailsEntry">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text field-size">First Name <span class='required'>*</span></span>
+                    </div>
+                    <input type="text" class="form-control" formControlName="firstName">
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text field-size">Last Name <span class='required'>*</span></span>
+                    </div>
+                    <input type="text" class="form-control" formControlName="lastName">
+                </div>
+
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text field-size">Gender <span class='required'>*</span></span>
+                    </div>
+                    <select name="Gender" class="form-control" formControlName="gender">
+                        <option value="Male" selected>Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text field-size">Date of Birth <span class='required'>*</span></span>
+                    </div>
+                    <input type="date" class="form-control" formControlName="dob">
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text field-size">Email <span class='required'>*</span></span>
+                    </div>
+                    <input type="email" class="form-control" formControlName="email" #email1>
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text field-size">Phone <span class='required'>*</span></span>
+                    </div>
+                    <input type="tel" class="form-control" formControlName="phone">
+                </div>
+
+                <div class="input-group mb-2" *ngIf="participantType==='CareProvider'">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text field-size">Provider Type <span class='required'>*</span></span>
+                    </div>
+                    <select name="ProviderType" class="form-control" formControlName="providerType">
+                        <option value="Phycisian" selected="selected">Phycisian</option>
+                        <option value="Pharmasist">Pharmasist</option>
+                        <option value="Dentist">Dentist</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text field-size">Address <span class='required'>*</span></span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Town" formControlName="town">
+                    <input type="number" class="form-control" placeholder="Box" formControlName="box">
+                    <input type="number" class="form-control" placeholder="Postal Code" formControlName="code">
+                </div>
+
+                <button type="button" class="previous" disabled><<Previous</button>
+                <button type="button" class="next" (click)="inputLogginCredentialts(false, email1.value)">Next>></button>
+
+                <br><br>
+              </div>
+              <ng-template #logginDetailsEntry>
+                <div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text field-size">User Name</span>
+                        </div>
+                        <input id="my-email" type="email" value='{{currentUserEmail}}' class="form-control" disabled>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text field-size">Password <span class='required'>*</span></span>
+                        </div>
+                        <input type="password" class="form-control" formControlName="pass1">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text field-size">Confirm Password <span class='required'>*</span></span>
+                        </div>
+                        <input type="password" class="form-control" formControlName="pass2">
+                    </div>
+
+                    <button type="button" class="previous" (click)="inputLogginCredentialts(true)"><<Previous</button>
+                    <button type="button" class="next" disabled>Next>></button>
+                    <br><br>
+                    <button *ngIf="submitBtn; else notsubmitBtn" name="submit" type="submit" id="submit">Register</button>
+                    <ng-template #notsubmitBtn>
+                      <button id="submit" disabled>
+                          <span class="spinner-border spinner-border-sm"></span>
+                          Creating account ...
+                      </button>
+                    </ng-template>
+                </div>
+                <br><br>
+              </ng-template>
+            </form>
+          </div>
+
+          <div *ngIf="formToshow == 'signin'">
+            <form class = 'sign-in-form' [formGroup]="loginForm" (ngSubmit)="signIn()" autocomplete="off">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text field-size">User Name</span>
+                    </div>
+                    <input type="email" class="form-control" placeholder="Email" formControlName="email">
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text field-size">Password</span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="Password" formControlName="password">
+                </div>
+
+
+                <button *ngIf="submitBtn2; else notsubmitBtn" name="submit" type="submit" id="submit">Login</button>
+                <ng-template #notsubmitBtn>
+                  <button id="submit" disabled>
+                      <span class="spinner-border spinner-border-sm"></span>
+                      Doing science ...
+                  </button>
+                </ng-template>
+                <br><br>
+            </form>
+          </div>
+
+        </div>
+  </div>
+</div>
+
+<div class='footer'>
+</div>

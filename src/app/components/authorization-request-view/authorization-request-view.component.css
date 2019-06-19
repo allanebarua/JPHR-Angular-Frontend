@@ -1,0 +1,289 @@
+div.authrequest-view {
+  margin-left: 10%;
+  margin-right: 5%;
+  text-align: center;
+}
+
+div.single-filter {
+  width: 190px;
+  height: 40px;
+  border: 2px solid #2196F3;
+  border-radius: 5px;
+  float: left;
+  margin-right: 20px;
+}
+
+div.myfilters {
+  width: 90%;
+  height: 51px;
+  text-align: center;
+  margin-top: 30px;
+  position: relative;
+  margin-left: 3%;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  float:right;
+  margin-top: 1px;
+  margin-right: 4px;
+}
+
+.filter-label {
+  margin-top: 8px;
+  margin-left: 4px;
+  color: #2196F3;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input.default:checked + .slider {
+  background-color: #444;
+}
+input.primary:checked + .slider {
+  background-color: #2196F3;
+}
+input.success:checked + .slider {
+  background-color: #8bc34a;
+}
+input.info:checked + .slider {
+  background-color: #3de0f5;
+}
+input.warning:checked + .slider {
+  background-color: #FFC107;
+}
+input.danger:checked + .slider {
+  background-color: #f44336;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+
+table {
+  width: 95%;
+  margin-top: 30px;
+  table-layout: fixed;
+}
+
+.hyphens {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+th.id {
+  width: 3%;
+}
+
+th.col1 {
+  width: 11.75%;
+}
+
+th.col2 {
+  width: 17%;
+}
+
+th.col3 {
+  width: 12.75
+}
+
+th.col4 {
+  width: 13.75
+}
+
+th.btns {
+  width: 18%;
+}
+
+div.after-filters {
+  margin-top: 30px;
+}
+
+span.badge {
+  margin-right: 5px;
+}
+
+td.pending {
+  color: #f44336;
+}
+
+td.granted {
+  color: #8bc34a;
+}
+
+td.declined {
+  color: #2196F3;
+}
+
+button {
+  text-decoration: none;
+  border-style: none;
+}
+
+button.auth-btn {
+  width: 70px;
+  height: 30px;
+  margin-left: 3px;
+  font-size: 13px;
+  color: white;
+  float:right;
+}
+
+button.btn-view {
+  background-color: green;
+}
+
+button.btn-revoke {
+  background-color: red;
+}
+
+button.btn-update {
+  background-color:blue;
+}
+
+button.declined {
+  opacity: 0.50;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+button.granted {
+  opacity: 0.50;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+button.modal-btn {
+  width: 70px;
+  height: 30px;
+  margin-left: 3px;
+  font-size: 13px;
+  color: white;
+  float:right;
+}
+
+button.delete {
+  background-color: red;
+}
+
+button.update {
+  background-color:blue;
+}
+
+button.refresh {
+  background-color:blue;
+  float: right;
+  width: 70px;
+  height: 30px;
+  color: white;
+  border-radius: 2px;
+}
+
+div.refresh-after-err {
+  width:100%;
+  text-align: center;
+}
+
+button.refresh2 {
+  width: 200px;
+  height: 40px;
+  background-color: white;
+  color: blue;
+  border-radius: 4px;
+  border: 2px solid #2196F3;
+}
+
+.refresh2:hover {
+  background-color: #2196F3;
+  color: white;
+}
+
+thead {
+  background-color: rgb(101, 147, 247);
+  color: white;
+  font-size: 18px;
+  border-top-left-radius: 10px;
+}
+
+tbody,
+tr,
+td {
+  border-bottom: 2px solid rgb(101, 147, 247);
+  border-top: 2px solid rgb(101, 147, 247);
+}
+
+
+div.notifier {
+  position: fixed;
+  left: 79%;
+  bottom: 40px;
+  right: 50px;
+  text-align: center;
+  background-color: green;
+  height: 50px;
+  text-align: left;
+  padding-left: 20px;
+  color: white;
+}
+
+
+div.notifier-item {
+  margin-top: 9px;
+  font-size: 18px;
+}
+
+span.my-spinner {
+  font-size: 30px;
+  margin-top: 8px;
+  margin-right: 30px;
+}

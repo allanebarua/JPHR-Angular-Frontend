@@ -1,0 +1,136 @@
+<div class="authrequest-view">
+  <div class="myfilters">
+    <div class="single-filter">
+      <label class="filter-label">All</label>
+      <label class="switch ">
+          <input id="all" type="checkbox" class="primary" #all (change)="filterChanged('all', all.checked)">
+          <span class="slider round"></span>
+      </label>
+    </div>
+
+    <div class="single-filter">
+        <label class="filter-label">Pending Review</label>
+        <label class="switch ">
+            <input id="pending" type="checkbox" class="primary" #pending (change)="filterChanged('pending', pending.checked)">
+            <span class="slider round"></span>
+        </label>
+    </div>
+
+    <div class="single-filter">
+        <label class="filter-label">Granted</label>
+        <label class="switch ">
+            <input id="granted" type="checkbox" class="primary" #granted (change)="filterChanged('granted', granted.checked)">
+            <span class="slider round"></span>
+        </label>
+    </div>
+
+    <div class="single-filter">
+        <label class="filter-label">Declined</label>
+        <label class="switch ">
+            <input id="declined" type="checkbox" class="primary" #declined (change)="filterChanged('declined', declined.checked)">
+            <span class="slider round"></span>
+        </label>
+    </div>
+
+    <div class="refresh-after-err">
+      <button class="refresh2" (click)="getAuthorizationRequest()">Refresh</button>
+    </div>
+
+  </div>
+
+
+
+  <!-- Authorization Table -->
+  <div class="after-filters">
+    <div *ngIf="yesData">
+      <table class="table table-hover">
+          <thead>
+            <tr>
+              <th class="id">#</th>
+              <th class="col2">Owner</th>
+              <th class="col2">CareProvider</th>
+              <th class="col3">Access Rights</th>
+              <th class="col4">Type</th>
+              <th class="col1">State</th>
+              <th class="btns">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let authRequest of runningAuthRequests; let i = index">
+              <td class="hyphens">{{ i + 1 }}</td>
+              <td class="hyphens">{{ authRequest.patient }}</td>
+              <td class="hyphens">{{ authRequest.provider }}</td>
+              <td class="hyphens">
+                <span *ngFor="let right of authRequest.accessRights" class="badge badge-info">
+                    {{right}}
+                </span>
+              </td>
+              <td class="hyphens">{{ authRequest.type | uppercase }}</td>
+              <td class="hyphens {{authRequest.state}}">{{ authRequest.state | uppercase }}</td>
+              <td>
+                <div *ngIf="myParentMessage.participantType == 'Patient'; else careProvider">
+                    <button class="auth-btn btn-revoke {{authRequest.state}}" type="button" data-toggle="modal" data-target="#declineModal" (click)="setRecordToDecline(authRequest.requestId)">Decline</button>
+                    <button class="auth-btn btn-update {{authRequest.state}}" type="button" (click) = "grantAccess(authRequest)">Grant</button>
+                </div>
+                <ng-template #careProvider>
+                    <button class="auth-btn btn-revoke " type="button" data-toggle="modal" data-target="#deleteModal" (click)="setRecordToDelete(authRequest.requestId)">Delete</button>
+                </ng-template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- No relevant data -->
+      <div *ngIf="noData">
+          <app-error404 [childMessage]="{notFound: 'Authorization Requests Not Found'}"></app-error404>
+      </div>
+
+      <!-- Fetching Data -->
+      <div *ngIf="fetchingData">
+        <app-loading-page [messageFromParent]="'Fetching Authorization Requests'"></app-loading-page>
+      </div>
+
+  </div>
+
+  <!-- Decline Access Request -->
+  <div class="modal fade" id="declineModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- Modal body -->
+        <div class="modal-body">
+          <span> Are you sure you want to decline this request? </span>
+          <button type="button" class="modal-btn delete" data-dismiss="modal" (click) = "declineAccess()">Yes</button>
+          <button type="button" class="modal-btn update" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decline Access Request -->
+  <div class="modal fade" id="deleteModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- Modal body -->
+        <div class="modal-body">
+          <span> Are you sure you want to delete this request? </span>
+          <button type="button" class="modal-btn delete" data-dismiss="modal" (click) = "deleteAccessRequest()">Yes</button>
+          <button type="button" class="modal-btn update" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notifier" *ngIf="showNotifier">
+      <div class="row">
+        <div class="col-2">
+            <span class="spinner-border spinner-border-lg my-spinner"></span>
+        </div>
+        <div class="col-10 notifier-item">
+            <span>{{notifierMessage}}</span>
+        </div>
+
+      </div>
+    </div>
+
+</div>
